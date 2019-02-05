@@ -1756,10 +1756,29 @@ setting_infos = [
         choices        = get_sword_color_options(),
         default        = 'White',
         gui_params     = {
-            'text':   'Inner Color',
+            'text':   'Inner Start Color',
             'group':  'sword_trails',
             'widget': 'Combobox',
             'tooltip':'''\
+                'Random Choice': Choose a random
+                color from this list of colors.
+                'Completely Random': Choose a random
+                color from any color the N64 can draw.
+                'Rainbow': Rainbow sword trails.
+            '''
+        },
+    ),
+    Setting_Info(
+        name           = 'sword_trail_color_inner_fade',
+        type           = str,
+        shared         = False,
+        choices        = get_sword_color_options(),
+        default        = 'White',
+        gui_params     = {
+            'text':   'Inner Fade Color',
+            'group':  'sword_trails',
+            'widget': 'Combobox',
+            'tooltip': '''\
                 'Random Choice': Choose a random
                 color from this list of colors.
                 'Completely Random': Choose a random
@@ -1775,17 +1794,36 @@ setting_infos = [
         choices        = get_sword_color_options(),
         default        = 'White',
         gui_params     = {
-            'text':   'Outer Color',
+            'text':   'Outer Start Color',
             'group':  'sword_trails',
             'widget': 'Combobox',
             'tooltip':'''\
-                'Random Choice': Choose a random
-                color from this list of colors.
-                'Completely Random': Choose a random
-                color from any color the N64 can draw.
-                'Rainbow': Rainbow sword trails.
+                      'Random Choice': Choose a random
+                      color from this list of colors.
+                      'Completely Random': Choose a random
+                      color from any color the N64 can draw.
+                      'Rainbow': Rainbow sword trails.
             '''
-        },
+        }
+    ),
+    Setting_Info(
+        name           = 'sword_trail_color_outer_fade',
+        type           = str,
+        shared         = False,
+        choices        = get_sword_color_options(),
+        default        = 'White',
+        gui_params     = {
+            'text':   'Outer Fade Color',
+            'group':  'sword_trails',
+            'widget': 'Combobox',
+            'tooltip': '''\
+                      'Random Choice': Choose a random
+                      color from this list of colors.
+                      'Completely Random': Choose a random
+                      color from any color the N64 can draw.
+                      'Rainbow': Rainbow sword trails.
+            '''
+        }
     ),
     Setting_Info(
         name           = 'magic_colors',
@@ -1793,7 +1831,7 @@ setting_infos = [
         shared         = False,
         choices        = get_magic_color_options(),
         default        = 'Green',
-        gui_params={
+        gui_params     = {
             'text':   'Magic Colors',
             'group':  'magic_colors',
             'widget': 'Combobox',
@@ -1812,7 +1850,7 @@ setting_infos = [
         shared         = False,
         choices        = get_magic_color_options(),
         default        = 'Silver',
-        gui_params={
+        gui_params     = {
             'text':   'Silver Gauntlets Color',
             'group':  'gauntlet_colors',
             'widget': 'Combobox',
@@ -1831,7 +1869,7 @@ setting_infos = [
         shared         = False,
         choices        = get_magic_color_options(),
         default        = 'Gold',
-        gui_params={
+        gui_params     = {
             'text':   'Golden Gauntlets Color',
             'group':  'gauntlet_colors',
             'widget': 'Combobox',
