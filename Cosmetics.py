@@ -416,6 +416,7 @@ global_patch_sets = [
     patch_music,
     patch_tunic_colors,
     patch_navi_colors,
+    patch_gauntlet_colors,
     patch_sfx,
     patch_instrument,    
 ]
