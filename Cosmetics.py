@@ -107,6 +107,7 @@ magic_colors = {
     "White":             Color(0xFF, 0xFF, 0xFF),
 }
 
+
 def get_tunic_colors():
     return list(tunic_colors.keys())
 
@@ -317,6 +318,7 @@ def patch_sword_trails(rom, settings, log, symbols):
             log.sword_colors[sword_trail_name] = [dict(option=sword_trail_option, color=''.join(['{:02X}'.format(c) for c in color[0:3]]))]
     log.sword_trail_duration = settings.sword_trail_duration
     rom.write_byte(0x00BEFF8C, settings.sword_trail_duration)
+
 
 def patch_gauntlet_colors(rom, settings, log, symbols):
     # patch gauntlet colors
@@ -665,6 +667,10 @@ class CosmeticsLog(object):
             color_option_string = '{option} (#{color})'
             output += format_string.format(key=magic+':', value=color_option_string.format(option=options['option'], color=options['color']), width=padding)
 
+        for magic, options in self.magic_colors.items():
+            color_option_string = '{option} (#{color})'
+            output += format_string.format(key=magic+':', value=color_option_string.format(option=options['option'], color=options['color']), width=padding)
+        
         output += '\n\nSFX:\n'
         for key, value in self.sfx.items():
             output += format_string.format(key=key+':', value=value, width=padding)
