@@ -1663,14 +1663,14 @@ setting_infos = [
         },
     ),
     Setting_Info(
-        name           = 'navi_color_default',
+        name           = 'navi_color_default_inner',
         type           = str,
         shared         = False,
         choices        = get_navi_color_options(),
         default        = 'White',
         gui_params     = {
-            'text':   'Navi Idle',
-            'group':  'navi_colors',
+            'text':   'Navi Idle Inner',
+            'group':  'navi_colors_inner',
             'widget': 'Combobox',
             'tooltip':'''\
                 'Random Choice': Choose a random
@@ -1681,14 +1681,14 @@ setting_infos = [
         },
     ),
     Setting_Info(
-        name           = 'navi_color_enemy',
+        name           = 'navi_color_enemy_inner',
         type           = str,
         shared         = False,
         choices        = get_navi_color_options(),
         default        = 'Yellow',
         gui_params     = {
             'text':   'Navi Targeting Enemy',
-            'group':  'navi_colors',
+            'group':  'navi_colors_inner',
             'widget': 'Combobox',
             'tooltip':'''\
                 'Random Choice': Choose a random
@@ -1699,14 +1699,14 @@ setting_infos = [
         },
     ),
     Setting_Info(
-        name           = 'navi_color_npc',
+        name           = 'navi_color_npc_inner',
         type           = str,
         shared         = False,
         choices        = get_navi_color_options(),
         default        = 'Light Blue',
         gui_params     = {
             'text':   'Navi Targeting NPC',
-            'group':  'navi_colors',
+            'group':  'navi_colors_inner',
             'widget': 'Combobox',
             'tooltip':'''\
                 'Random Choice': Choose a random
@@ -1717,14 +1717,14 @@ setting_infos = [
         },
     ),
     Setting_Info(
-        name           = 'navi_color_prop',
+        name           = 'navi_color_prop_inner',
         type           = str,
         shared         = False,
         choices        = get_navi_color_options(),
         default        = 'Green',
         gui_params     = {
-            'text':   'Navi Targeting Prop',
-            'group':  'navi_colors',
+            'text':   'Navi Targeting Prop_inner',
+            'group':  'navi_colors_inner',
             'widget': 'Combobox',
             'tooltip':'''\
                 'Random Choice': Choose a random
@@ -1734,20 +1734,93 @@ setting_infos = [
             '''
         },
     ),
-    Combobox(
-        name           = 'sword_trail_duration',
-        choices        = {
-            4: 'Default',
-            10: 'Long',
-            15: 'Very Long',
-            20: 'Lightsaber',
+    Setting_Info(
+        name           = 'navi_color_default_outer',
+        type           = str,
+        shared         = False,
+        choices        = get_navi_color_options(),
+        default        = 'White',
+        gui_params     = {
+            'text':   'Navi Idle',
+            'group':  'navi_colors_outer',
+            'widget': 'Combobox',
+            'tooltip': '''\
+                'Random Choice': Choose a random
+                color from this list of colors.
+                'Completely Random': Choose a random
+                color from any color the N64 can draw.
+            '''
         },
+    ),
+    Setting_Info(
+        name           = 'navi_color_enemy_outer',
+        type           = str,
+        shared         = False,
+        choices        = get_navi_color_options(),
+        default        = 'Yellow',
+        gui_params     = {
+            'text':   'Navi Targeting Enemy',
+            'group':  'navi_colors_outer',
+            'widget': 'Combobox',
+            'tooltip': '''\
+                'Random Choice': Choose a random
+                color from this list of colors.
+                'Completely Random': Choose a random
+                color from any color the N64 can draw.
+            '''
+        },
+    ),
+    Setting_Info(
+        name           = 'navi_color_npc_outer',
+        type           = str,
+        shared         = False,
+        choices        = get_navi_color_options(),
+        default        = 'Light Blue',
+        gui_params     = {
+            'text':   'Navi Targeting NPC',
+            'group':  'navi_colors_outer',
+            'widget': 'Combobox',
+            'tooltip': '''\
+                'Random Choice': Choose a random
+                color from this list of colors.
+                'Completely Random': Choose a random
+                color from any color the N64 can draw.
+            '''
+        },
+    ),
+    Setting_Info(
+        name           = 'navi_color_prop_outer',
+        type           = str,
+        shared         = False,
+        choices        = get_navi_color_options(),
+        default        = 'Green',
+        gui_params     = {
+            'text':   'Navi Targeting Prop',
+            'group':  'navi_colors_outer',
+            'widget': 'Combobox',
+            'tooltip': '''\
+                'Random Choice': Choose a random
+                color from this list of colors.
+                'Completely Random': Choose a random
+                color from any color the N64 can draw.
+            '''
+        },
+    ),
+    Scale(
+        name           = 'sword_trail_duration',
+        shared         = False,
         default        = 4,
-        gui_text       = 'Sword Trail Duration',
-        gui_group      = 'sword_trails',
-        gui_tooltip    = '''\
-            Select the duration for sword trails.
-        ''',
+        min            = 3,
+        max            = 20,
+        gui_params={
+            'text': 'Sword Trail Duration',
+            'group': 'cosmetic',
+            'tooltip': '''\
+                Trials are randomly selected. If hints are
+                enabled, then there will be hints for which
+                trials need to be completed.
+            ''',
+        },
     ),
     Setting_Info(
         name           = 'sword_trail_color_inner',
@@ -1757,7 +1830,7 @@ setting_infos = [
         default        = 'White',
         gui_params     = {
             'text':   'Inner Start Color',
-            'group':  'sword_trails',
+            'group':  'sword_trails_inner',
             'widget': 'Combobox',
             'tooltip':'''\
                 'Random Choice': Choose a random
@@ -1776,7 +1849,7 @@ setting_infos = [
         default        = 'White',
         gui_params     = {
             'text':   'Inner Fade Color',
-            'group':  'sword_trails',
+            'group':  'sword_trails_inner',
             'widget': 'Combobox',
             'tooltip': '''\
                 'Random Choice': Choose a random
@@ -1795,7 +1868,7 @@ setting_infos = [
         default        = 'White',
         gui_params     = {
             'text':   'Outer Start Color',
-            'group':  'sword_trails',
+            'group':  'sword_trails_outer',
             'widget': 'Combobox',
             'tooltip':'''\
                       'Random Choice': Choose a random
@@ -1814,7 +1887,7 @@ setting_infos = [
         default        = 'White',
         gui_params     = {
             'text':   'Outer Fade Color',
-            'group':  'sword_trails',
+            'group':  'sword_trails_outer',
             'widget': 'Combobox',
             'tooltip': '''\
                       'Random Choice': Choose a random
@@ -1848,7 +1921,7 @@ setting_infos = [
         name           = 'silver_gauntlet_colors',
         type           = str,
         shared         = False,
-        choices        = get_magic_color_options(),
+        choices        = get_gauntlet_color_options(),
         default        = 'Silver',
         gui_params     = {
             'text':   'Silver Gauntlets Color',
@@ -1867,7 +1940,7 @@ setting_infos = [
         name           = 'golden_gauntlet_colors',
         type           = str,
         shared         = False,
-        choices        = get_magic_color_options(),
+        choices        = get_gauntlet_color_options(),
         default        = 'Gold',
         gui_params     = {
             'text':   'Golden Gauntlets Color',
