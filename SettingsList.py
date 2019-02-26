@@ -1,7 +1,7 @@
 import argparse
 import re
 import math
-from Cosmetics import get_tunic_color_options, get_navi_color_options, get_sword_color_options
+from Cosmetics import get_tunic_color_options, get_navi_color_options, get_sword_color_options, get_heart_color_options
 from Location import LocationIterator
 import Sounds as sfx
 
@@ -1784,6 +1784,24 @@ setting_infos = [
                 'Completely Random': Choose a random
                 color from any color the N64 can draw.
                 'Rainbow': Rainbow sword trails.
+            '''
+        },
+    ),
+    Setting_Info(
+        name           = 'heart_color',
+        type           = str,
+        shared         = False,
+        choices        = get_heart_color_options(),
+        default        = 'Red',
+        gui_params     = {
+            'text':   'Heart Colors',
+            'group':  'heart_colors',
+            'widget': 'Combobox',
+            'tooltip': '''\
+                'Random Choice': Choose a random
+                color from this list of colors.
+                'Completely Random': Choose a random
+                color from any color the N64 can draw.
             '''
         },
     ),
