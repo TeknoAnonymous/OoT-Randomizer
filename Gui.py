@@ -157,6 +157,7 @@ def guiMain(settings=None):
     #Cosmetic tab
     frames['cosmetic']    = LabelFrame(frames['cosmetic_tab_left'],  text='General',           labelanchor=NW)
     frames['sword_trails']= LabelFrame(frames['cosmetic_tab_left'],  text='Sword Trail Colors',labelanchor=NW)
+    frames['heart_colors']= LabelFrame(frames['cosmetic_tab_left'],  text='Heart Colors',      labelanchor=NW)
     frames['tunic_colors']= LabelFrame(frames['cosmetic_tab_right'], text='Tunics',            labelanchor=NW)
     frames['navi_colors'] = LabelFrame(frames['cosmetic_tab_right'], text='Navi Colors',       labelanchor=NW)
 
@@ -465,6 +466,7 @@ def guiMain(settings=None):
 
     # Cosmetics tab - Left Side
     frames['sword_trails'].pack(fill=BOTH, expand=True, anchor=W, side=TOP, pady=(5,1))
+    frames['heart_colors'].pack(fill=BOTH, expand=True, anchor=W, side=TOP, pady=(5,1))
 
     # Cosmetics tab - Right Side
     frames['tunic_colors'].pack(fill=BOTH, expand=True, anchor=N, side=TOP)
