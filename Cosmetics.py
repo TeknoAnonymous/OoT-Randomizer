@@ -642,6 +642,9 @@ class CosmeticsLog(object):
         for tunic, options in self.tunic_colors.items():
             color_option_string = '{option} (#{color})'
             output += format_string.format(key=tunic+':', value=color_option_string.format(option=options['option'], color=options['color']), width=padding)
+        for gauntlet, options in self.gauntlet_colors.items():
+            color_option_string = '{option} (#{color})'
+            output += format_string.format(key=gauntlet+':', value=color_option_string.format(option=options['option'], color=options['color']), width=padding)
 
         for navi_action, list in self.navi_colors.items():
             for i, options in enumerate(list):
@@ -662,10 +665,6 @@ class CosmeticsLog(object):
             color_option_string = '{option} (#{color})'
             output += format_string.format(key=gauntlet+':', value=color_option_string.format(option=options['option'], color=options['color']), width=padding)
             
-        for magic, options in self.magic_colors.items():
-            color_option_string = '{option} (#{color})'
-            output += format_string.format(key=magic+':', value=color_option_string.format(option=options['option'], color=options['color']), width=padding)
-
         for magic, options in self.magic_colors.items():
             color_option_string = '{option} (#{color})'
             output += format_string.format(key=magic+':', value=color_option_string.format(option=options['option'], color=options['color']), width=padding)
