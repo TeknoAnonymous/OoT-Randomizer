@@ -1109,3 +1109,44 @@ skip_GS_BGS_text:
     nop
     lw      ra, 0x0000 (sp)
     nop
+;==================================================================================================
+; Never override Heart Colors
+;==================================================================================================
+
+; Replaces:
+;   SH A2, 0x020E (V0)
+;   SH T9, 0x0212 (V0)
+;   SH A0, 0x0216 (V0)
+.org 0xADA8A8
+    nop
+    nop
+    nop
+
+; Replaces:
+;   SH T5, 0x0202 (V0)
+.org 0xADA97C
+    nop
+
+.org 0xADA9A8
+    nop
+
+.org 0xADA9BC
+    nop
+
+
+.org 0xADAA64
+    nop
+
+.org 0xADAA74
+    nop
+    nop
+
+
+.org 0xADABA8
+    nop
+
+.org 0xADABCC
+    nop
+
+.org 0xADABE4
+    nop

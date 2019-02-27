@@ -1,7 +1,7 @@
 import argparse
 import re
 import math
-from Cosmetics import get_tunic_color_options, get_navi_color_options, get_sword_color_options, get_gauntlet_color_options, get_magic_color_options
+from Cosmetics import get_tunic_color_options, get_navi_color_options, get_sword_color_options, get_gauntlet_color_options, get_magic_color_options, get_heart_color_options
 from Location import LocationIterator
 import Sounds as sfx
 
@@ -1899,26 +1899,7 @@ setting_infos = [
         }
     ),
     Setting_Info(
-        name           = 'magic_colors',
-        type           = str,
-        shared         = False,
-        choices        = get_magic_color_options(),
-        default        = 'Green',
-        gui_params     = {
-            'text':   'Magic Colors',
-            'group':  'magic_colors',
-            'widget': 'Combobox',
-            'tooltip': '''\
-                'Random Choice': Choose a random
-                color from this list of colors.
-                'Completely Random': Choose a random
-                color from any color the N64 can draw.
-                'Rainbow': Rainbow sword trails.
-            '''
-        },
-    ),
-    Setting_Info(
-        name           = 'silver_gauntlet_colors',
+        name           = 'silver_gauntlets_color',
         type           = str,
         shared         = False,
         choices        = get_gauntlet_color_options(),
@@ -1937,12 +1918,12 @@ setting_infos = [
         },
     ),
     Setting_Info(
-        name           = 'golden_gauntlet_colors',
+        name           = 'golden_gauntlets_color',
         type           = str,
         shared         = False,
         choices        = get_gauntlet_color_options(),
         default        = 'Gold',
-        gui_params     = {
+        gui_params={
             'text':   'Golden Gauntlets Color',
             'group':  'gauntlet_colors',
             'widget': 'Combobox',
@@ -1952,6 +1933,43 @@ setting_infos = [
                 'Completely Random': Choose a random
                 color from any color the N64 can draw.
                 'Rainbow': Rainbow sword trails.
+            '''
+        },
+    ),
+    Setting_Info(
+        name           = 'magic_color',
+        type           = str,
+        shared         = False,
+        choices        = get_magic_color_options(),
+        default        = 'Green',
+        gui_params     = {
+            'text':   'Magic Colors',
+            'group':  'magic_colors',
+            'widget': 'Combobox',
+            'tooltip': '''\
+                'Random Choice': Choose a random
+                color from this list of colors.
+                'Completely Random': Choose a random
+                color from any color the N64 can draw.
+                'Rainbow': Rainbow sword trails.
+            '''
+        },
+    ),
+    Setting_Info(
+        name           = 'heart_color',
+        type           = str,
+        shared         = False,
+        choices        = get_heart_color_options(),
+        default        = 'Red',
+        gui_params     = {
+            'text':   'Heart Colors',
+            'group':  'heart_colors',
+            'widget': 'Combobox',
+            'tooltip': '''\
+                'Random Choice': Choose a random
+                color from this list of colors.
+                'Completely Random': Choose a random
+                color from any color the N64 can draw.
             '''
         },
     ),

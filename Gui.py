@@ -163,6 +163,7 @@ def guiMain(settings=None):
     frames['sword_trails_inner']= LabelFrame(frames['cosmetic_tab_left'],  text='Sword Trail Inner Colors',labelanchor=NW)
     frames['sword_trails_outer']= LabelFrame(frames['cosmetic_tab_left'],  text='Sword Trail Outer Colors',labelanchor=NW)
     frames['magic_colors']= LabelFrame(frames['cosmetic_tab_right'], text='Magic Color',         labelanchor=NW)
+    frames['heart_colors']= LabelFrame(frames['cosmetic_tab_left'],  text='Heart Colors',      labelanchor=NW)
     frames['tunic_colors']= LabelFrame(frames['cosmetic_tab_right'], text='Tunics',            labelanchor=NW)
     frames['gauntlet_colors']= LabelFrame(frames['cosmetic_tab_right'], text='Gauntlet Colors', labelanchor=NW)
 
@@ -482,6 +483,7 @@ def guiMain(settings=None):
     frames['magic_colors'].pack(fill=BOTH, expand=True, anchor=W, side=BOTTOM, pady=(5,1))
     frames['sword_trails_inner'].pack(fill=BOTH, expand=True, anchor=W, side=TOP)
     frames['sword_trails_outer'].pack(fill=BOTH, expand=True, anchor=W, side=BOTTOM)
+    frames['heart_colors'].pack(fill=BOTH, expand=True, anchor=W, side=TOP, pady=(5,1))
 
     # Cosmetics tab - Right Side
     frames['tunic_colors'].pack(fill=BOTH, expand=True, anchor=N, side=TOP)
