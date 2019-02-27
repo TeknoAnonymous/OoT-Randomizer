@@ -595,10 +595,6 @@ class CosmeticsLog(object):
         if 'sword_trail_duration' in self.__dict__:
             output += format_string.format(key='Sword Trail Duration:', value=self.sword_trail_duration, width=padding)
 
-        for gauntlet, options in self.gauntlet_colors.items():
-            color_option_string = '{option} (#{color})'
-            output += format_string.format(key=gauntlet+':', value=color_option_string.format(option=options['option'], color=options['color']), width=padding)
-
         output += '\n\nSFX:\n'
         for key, value in self.sfx.items():
             output += format_string.format(key=key+':', value=value, width=padding)
