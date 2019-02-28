@@ -1,3 +1,4 @@
+from Region import Region
 from collections import Counter, defaultdict
 import copy
 
@@ -17,6 +18,12 @@ class State(object):
         self.region_cache = {k: v for k, v in self.region_cache.items() if v}
 
 
+    def clear_cache(self):
+        self.region_cache = {}
+        self.location_cache = {}
+        self.entrance_cache = {}
+
+
     def copy(self, new_world=None):
         if not new_world:
             new_world = self.world
@@ -27,47 +34,49 @@ class State(object):
         return new_state
 
 
-    def can_reach(self, spot, resolution_hint=None):
-        try:
-            spot_type = spot.spot_type
-            if spot_type == 'Location' or spot_type == 'Entrance':
-                return spot.can_reach(self)
-            elif spot_type == 'Region':
-                correct_cache = self.region_cache
-            else:
-                raise AttributeError
-        except AttributeError:
+    def get_spot(self, spot, resolution_hint='Region'):
+        if isinstance(spot, str):
             # try to resolve a name
             if resolution_hint == 'Location':
-                spot = self.world.get_location(spot)
-                return spot.can_reach(self)
+                return self.world.get_location(spot)
             elif resolution_hint == 'Entrance':
-                spot = self.world.get_entrance(spot)
-                return spot.can_reach(self)
+                return self.world.get_entrance(spot)
+            elif resolution_hint == 'Region':
+                return self.world.get_region(spot)
             else:
-                # default to Region
-                spot = self.world.get_region(spot)
-                correct_cache = self.region_cache
+                raise AttributeError('Unknown resolution hint type: ' + str(resolution_hint))
+        else:
+            return spot           
+
+
+    def can_reach(self, spot, resolution_hint='Region'):
+        spot = self.get_spot(spot, resolution_hint)
+
+        if not isinstance(spot, Region):
+            return spot.can_reach(self)
 
         if spot.recursion_count > 0:
             return False
 
-        if spot not in correct_cache:
+        if spot not in self.region_cache:
             # for the purpose of evaluating results, recursion is resolved by always denying recursive access (as that ia what we are trying to figure out right now in the first place
             spot.recursion_count += 1
             self.recursion_count += 1
+
             can_reach = spot.can_reach(self)
+
             spot.recursion_count -= 1
             self.recursion_count -= 1
 
             # we only store qualified false results (i.e. ones not inside a hypothetical)
             if not can_reach:
                 if self.recursion_count == 0:
-                    correct_cache[spot] = can_reach
+                    self.region_cache[spot] = can_reach
             else:
-                correct_cache[spot] = can_reach
+                self.region_cache[spot] = can_reach
             return can_reach
-        return correct_cache[spot]
+
+        return self.region_cache[spot]
 
 
     def item_name(self, location):
@@ -79,6 +88,13 @@ class State(object):
 
     def has(self, item, count=1):
         return self.prog_items[item] >= count
+
+
+    def has_any(self, predicate):
+        for pritem in self.prog_items:
+            if predicate(pritem):
+                return True
+        return False
 
 
     def item_count(self, item):
@@ -177,7 +193,7 @@ class State(object):
 
     def has_bombchus(self):
         return (self.world.bombchus_in_logic and \
-                    (any(pritem.startswith('Bombchus') for pritem in self.prog_items) and \
+                    (self.has_any(lambda pritem: pritem.startswith('Bombchus')) and \
                         self.can_buy_bombchus())) \
             or (not self.world.bombchus_in_logic and self.has('Bomb Bag') and \
                         self.can_buy_bombchus())
@@ -185,7 +201,7 @@ class State(object):
 
     def has_bombchus_item(self):
         return (self.world.bombchus_in_logic and \
-                (any(pritem.startswith('Bombchus') for pritem in self.prog_items) \
+                (self.has_any(lambda pritem: pritem.startswith('Bombchus')) \
                 or (self.has('Progressive Wallet') and self.can_reach('Haunted Wasteland')))) \
             or (not self.world.bombchus_in_logic and self.has('Bomb Bag'))
 
@@ -231,13 +247,13 @@ class State(object):
 
     def can_finish_adult_trades(self):
         zora_thawed = (self.can_play('Zeldas Lullaby') or (self.has('Hover Boots') and self.world.logic_zora_with_hovers)) and self.has_blue_fire()
-        carpenter_access = self.has('Epona') or self.has('Progressive Hookshot', 2)
-        return (self.has('Claim Check') or ((self.has('Progressive Strength Upgrade') or self.can_blast_or_smash() or self.has_bow()) and (((self.has('Eyedrops') or self.has('Eyeball Frog') or self.has('Prescription') or self.has('Broken Sword')) and zora_thawed) or ((self.has('Poachers Saw') or self.has('Odd Mushroom') or self.has('Cojiro') or self.has('Pocket Cucco') or self.has('Pocket Egg')) and zora_thawed and carpenter_access))))
+        carpenter_access = self.can_reach('Gerudo Valley Far Side')
+        return (self.has('Claim Check') or ((self.has('Progressive Strength Upgrade') or self.can_blast_or_smash() or self.has_bow() or self.world.logic_biggoron_bolero) and (((self.has('Eyedrops') or self.has('Eyeball Frog') or self.has('Prescription') or self.has('Broken Sword')) and zora_thawed) or ((self.has('Poachers Saw') or self.has('Odd Mushroom') or self.has('Cojiro') or self.has('Pocket Cucco') or self.has('Pocket Egg')) and zora_thawed and carpenter_access))))
 
 
     def has_bottle(self):
         is_normal_bottle = lambda item: (item.startswith('Bottle') and item != 'Bottle with Letter' and (item != 'Bottle with Big Poe' or self.is_adult()))
-        return any(is_normal_bottle(pritem) for pritem in self.prog_items)
+        return self.has_any(is_normal_bottle)
 
 
     def bottle_count(self):
