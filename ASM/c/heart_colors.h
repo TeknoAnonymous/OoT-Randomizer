@@ -1,10 +1,5 @@
 #include <stdint.h>
+#include "colors.h"
 
-typedef struct
-{
-  uint16_t r;
-  uint16_t g;
-  uint16_t b;
-} colorRGB_t;
-
+static color16RGB_t get_16_color();
 void update_heart_colors();

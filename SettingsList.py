@@ -1926,12 +1926,34 @@ setting_infos = [
             '''
         },
     ),
-    Scale(
+    Combobox(
         name           = 'sword_trail_duration',
         shared         = False,
+        choices        = {
+            2:        '.1 Seconds',
+            3:        '.15 Seconds',
+            4:        '.2 Seconds',
+            5:        '.25 Seconds',
+            6:        '.3 Seconds',
+            7:        '.35 Seconds',
+            8:        '.4 Seconds',
+            9:        '.45 Seconds',
+            10:       '.5 Seconds',
+            11:       '.55 Seconds',
+            12:       '.6 Seconds',
+            13:       '.65 Seconds',
+            14:       '.7 Seconds',
+            15:       '.75 Seconds',
+            16:       '.8 Seconds',
+            17:       '.85 Seconds',
+            18:       '.9 Seconds',
+            19:       '.95 Seconds',
+            20:       '1 Second',
+            21:       '1.05 Seconds',
+            22:       '1.1 Seconds',
+            23:       '1.15 Seconds'
+        },
         default        = 4,
-        min            = 3,
-        max            = 20,
         gui_params={
             'text': 'Sword Trail Duration',
             'group': 'cosmetic',

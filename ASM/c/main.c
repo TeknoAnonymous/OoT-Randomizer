@@ -6,6 +6,8 @@
 #include "text.h"
 #include "util.h"
 #include "dpad.h"
+#include "rainbow_tunic.h"
+#include "rainbow_navi.h"
 #include "rainbow_sword.h"
 #include "heart_colors.h"
 #include "z64.h"
@@ -23,7 +25,9 @@ void c_init() {
 void before_game_state_update() {
     handle_pending_items();
     handle_dpad();
-    update_color();
+    update_tunic_colors();
+    update_navi_colors();
+    update_sword_colors();
     update_heart_colors();
 }
 

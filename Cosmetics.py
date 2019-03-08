@@ -239,6 +239,13 @@ def patch_navi_colors(rom, settings, log, symbols):
     ]
     navi_color_list = get_navi_colors()
     for navi_action, navi_option, navi_addresses in navi:
+#        # set rainbow option
+#        if navi_option == 'Rainbow':
+#            rom.write_byte(sword_trail_rainbow_symbol, 0x01)
+#            color = [0x00, 0x00, 0x00]
+#            continue
+#        else:
+#            rom.write_byte(sword_trail_rainbow_symbol, 0x00)
         # choose a random choice for the whole group
         if navi_option == 'Random Choice':
             if navi_action in [i[0] for i in navi[0:4]]:
