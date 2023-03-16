@@ -250,6 +250,55 @@ void update_navi_colors()
     }
 }
 
+#define KOKIRI_TUNIC_CYCLE_FRAMES 22
+#define GORON_TUNIC_CYCLE_FRAMES 18
+#define ZORA_TUNIC_CYCLE_FRAMES 14
+
+extern uint8_t CFG_RAINBOW_KOKIRI_TUNIC_ENABLED;
+extern uint8_t CFG_RAINBOW_GORON_TUNIC_ENABLED;
+extern uint8_t CFG_RAINBOW_ZORA_TUNIC_ENABLED;
+
+void update_tunic_colors()
+{
+    colorRGB8_t *tunic_colors = (colorRGB8_t*)0x800F7AD8;
+    
+    if (CFG_RAINBOW_KOKIRI_TUNIC_ENABLED)
+    {
+	    tunic_colors[0] = get_rainbow_color(frames, KOKIRI_TUNIC_CYCLE_FRAMES);
+    }
+    
+    if (CFG_RAINBOW_GORON_TUNIC_ENABLED)
+    {
+        tunic_colors[1] = get_rainbow_color(frames, GORON_TUNIC_CYCLE_FRAMES);
+    }
+
+    if (CFG_RAINBOW_ZORA_TUNIC_ENABLED)
+    {
+	    tunic_colors[2] = get_rainbow_color(frames, ZORA_TUNIC_CYCLE_FRAMES);
+    }
+}
+
+#define SILVER_GAUNTLET_CYCLE_FRAMES 24
+#define GOLD_GAUNTLET_CYCLE_FRAMES 16
+
+extern uint8_t CFG_RAINBOW_SILVER_GAUNTLETS_ENABLED;
+extern uint8_t CFG_RAINBOW_GOLD_GAUNTLETS_ENABLED;
+
+void update_gauntlet_colors()
+{
+    colorRGB8_t *gaunt_colors = (colorRGB8_t*)0x800F7AE4;
+    
+    if (CFG_RAINBOW_SILVER_GAUNTLETS_ENABLED)
+    {
+	    gaunt_colors[0] = get_rainbow_color(frames, SILVER_GAUNTLET_CYCLE_FRAMES);
+    }
+    
+    if (CFG_RAINBOW_GOLD_GAUNTLETS_ENABLED)
+    {
+        gaunt_colors[1] = get_rainbow_color(frames, GOLD_GAUNTLET_CYCLE_FRAMES);
+    }
+}
+
 void update_misc_colors()
 {
     frames++;
@@ -257,4 +306,6 @@ void update_misc_colors()
     update_boomerang_trail_colors();
     update_bombchu_trail_colors();
     update_navi_colors();
+    update_tunic_colors();
+    update_gauntlet_colors();
 }

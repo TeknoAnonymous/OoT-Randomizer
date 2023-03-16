@@ -13,7 +13,6 @@ import json
 from itertools import chain
 import os
 
-
 def patch_targeting(rom, settings, log, symbols):
     # Set default targeting option to Hold
     if settings.default_targeting == 'hold':
@@ -92,19 +91,31 @@ def patch_tunic_icon(rom, tunic, color):
 def patch_tunic_colors(rom, settings, log, symbols):
     # patch tunic colors
     tunics = [
-        ('Kokiri Tunic', 'kokiri_color', 0x00B6DA38),
-        ('Goron Tunic',  'goron_color',  0x00B6DA3B),
-        ('Zora Tunic',   'zora_color',   0x00B6DA3E),
+        ('Kokiri Tunic', 'kokiri_color', 0x00B6DA38, symbols.get('CFG_RAINBOW_KOKIRI_TUNIC_ENABLED', None)),
+        ('Goron Tunic',  'goron_color',  0x00B6DA3B, symbols.get('CFG_RAINBOW_GORON_TUNIC_ENABLED', None)),
+        ('Zora Tunic',   'zora_color',   0x00B6DA3E, symbols.get('CFG_RAINBOW_ZORA_TUNIC_ENABLED', None)),
     ]
+
     tunic_color_list = get_tunic_colors()
+    rainbow_error = None
 
-    for tunic, tunic_setting, address in tunics:
+    for tunic, tunic_setting, address, rainbow_symbol in tunics:
+        color = None
         tunic_option = settings.__dict__[tunic_setting]
-
+        
         # Handle Plando
         if log.src_dict.get('equipment_colors', {}).get(tunic, {}).get('color', ''):
             tunic_option = log.src_dict['equipment_colors'][tunic]['color']
-
+        
+        # set rainbow option
+        if rainbow_symbol is not None and tunic_option == 'Rainbow':
+            rom.write_byte(rainbow_symbol, 0x01)
+            color = [0x00, 0x00, 0x00]
+        elif rainbow_symbol is not None:
+            rom.write_byte(rainbow_symbol, 0x00)
+        elif tunic_option == 'Rainbow':
+            rainbow_error = "Rainbow Tunics is not supported by this patch version. Using 'Completely Random' as a substitute."
+            option = 'Completely Random'
         # handle random
         if tunic_option == 'Random Choice':
             tunic_option = random.choice(tunic_color_list)
@@ -128,11 +139,15 @@ def patch_tunic_colors(rom, settings, log, symbols):
             patch_tunic_icon(rom, tunic, color)
         else:
             patch_tunic_icon(rom, tunic, None)
-
+            
         log.equipment_colors[tunic] = CollapseDict({
             ':option': tunic_option,
             'color': color_to_hex(color),
         })
+        if tunic != "Rainbow" or rainbow_error:
+            log.equipment_colors[tunic]['color']
+        else:
+            del log.misc_colors[tunic]['color']
 
 
 def patch_navi_colors(rom, settings, log, symbols):
@@ -449,18 +464,28 @@ def patch_gauntlet_colors(rom, settings, log, symbols):
     # patch gauntlet colors
     gauntlets = [
         ('Silver Gauntlets', 'silver_gauntlets_color', 0x00B6DA44,
-            ([0x173B4CC], [0x173B4D4, 0x173B50C, 0x173B514], [])), # GI Model DList colors
+            ([0x173B4CC], [0x173B4D4, 0x173B50C, 0x173B514], []), symbols.get("CFG_RAINBOW_SILVER_GAUNTLETS_ENABLED", None)), # GI Model DList colors
         ('Gold Gauntlets', 'golden_gauntlets_color',  0x00B6DA47,
-            ([0x173B4EC], [0x173B4F4, 0x173B52C, 0x173B534], [])), # GI Model DList colors
+            ([0x173B4EC], [0x173B4F4, 0x173B52C, 0x173B534], []), symbols.get("CFG_RAINBOW_GOLD_GAUNTLETS_ENABLED", None)), # GI Model DList colors
     ]
     gauntlet_color_list = get_gauntlet_colors()
 
-    for gauntlet, gauntlet_setting, address, model_addresses in gauntlets:
+    for gauntlet, gauntlet_setting, address, model_addresses, rainbow_symbol in gauntlets:
         gauntlet_option = settings.__dict__[gauntlet_setting]
+        rainbow_error = None
 
         # Handle Plando
         if log.src_dict.get('equipment_colors', {}).get(gauntlet, {}).get('color', ''):
             gauntlet_option = log.src_dict['equipment_colors'][gauntlet]['color']
+
+        if rainbow_symbol is not None and gauntlet_option == 'Rainbow':
+            rom.write_byte(rainbow_symbol, 0x01)
+            color = [0x00, 0x00, 0x00]
+        elif rainbow_symbol is not None:
+            rom.write_byte(rainbow_symbol, 0x00)
+        elif gauntlet_option == 'Rainbow':
+            rainbow_error = "Rainbow Gauntlets are not supported by this patch version. Using 'Completely Random' as a substitute."
+            option = 'Completely Random'
 
         # handle random
         if gauntlet_option == 'Random Choice':
@@ -484,6 +509,11 @@ def patch_gauntlet_colors(rom, settings, log, symbols):
             ':option': gauntlet_option,
             'color': color_to_hex(color),
         })
+        if gauntlet != "Rainbow" or rainbow_error:
+            log.equipment_colors[gauntlet]['color']
+        else:
+            del log.misc_colors[gauntlet]['color']
+
 
 def patch_shield_frame_colors(rom, settings, log, symbols):
     # patch shield frame colors
@@ -1017,6 +1047,21 @@ patch_sets[0x1F073FD9] = {
     }
 }
 
+# 6.2.205
+patch_sets[0x1F073FE7] = {
+    "patches": patch_sets[0x1F073FD8]["patches"] + [
+        patch_tunic_colors,
+        patch_gauntlet_colors,
+    ],
+    "symbols": {
+        **patch_sets[0x1F073FD8]["symbols"],
+        "CFG_RAINBOW_KOKIRI_TUNIC_ENABLED": 0x0056,
+        "CFG_RAINBOW_GORON_TUNIC_ENABLED": 0x0057,
+        "CFG_RAINBOW_ZORA_TUNIC_ENABLED": 0x0058,
+        "CFG_RAINBOW_SILVER_GAUNTLETS_ENABLED": 0x0059,
+        "CFG_RAINBOW_GOLD_GAUNTLETS_ENABLED": 0x005A,
+    }
+}
 
 def patch_cosmetics(settings, rom):
     # re-seed for aesthetic effects. They shouldn't be affected by the generation seed

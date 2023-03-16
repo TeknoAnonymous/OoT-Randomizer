@@ -5327,6 +5327,7 @@ setting_infos = [
             color from this list of colors.
             'Completely Random': Choose a random
             color from any color the N64 can draw.
+            'Rainbow': Cycle through a color rainbow.
         ''',
         gui_params     = {
             'randomize_key': 'randomize_all_cosmetics',
@@ -5349,6 +5350,7 @@ setting_infos = [
             color from this list of colors.
             'Completely Random': Choose a random
             color from any color the N64 can draw.
+            'Rainbow': Cycle through a color rainbow.
         ''',
         gui_params     = {
             'randomize_key': 'randomize_all_cosmetics',
@@ -5371,6 +5373,7 @@ setting_infos = [
             color from this list of colors.
             'Completely Random': Choose a random
             color from any color the N64 can draw.
+            'Rainbow': Cycle through a color rainbow.
         ''',
         gui_params     = {
             'randomize_key': 'randomize_all_cosmetics',
@@ -5393,6 +5396,7 @@ setting_infos = [
             color from this list of colors.
             'Completely Random': Choose a random
             color from any color the N64 can draw.
+            'Rainbow': Cycle through a color rainbow.
         ''',
         gui_params     = {
             'randomize_key': 'randomize_all_cosmetics',
@@ -5415,6 +5419,7 @@ setting_infos = [
             color from this list of colors.
             'Completely Random': Choose a random
             color from any color the N64 can draw.
+            'Rainbow': Cycle through a color rainbow.
         ''',
         gui_params     = {
             'randomize_key': 'randomize_all_cosmetics',

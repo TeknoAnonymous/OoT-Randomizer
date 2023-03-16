@@ -5,6 +5,7 @@ import re
 Color = namedtuple('Color', '  R     G     B')
 
 tunic_colors = {
+    "Rainbow":           Color(0x00, 0x00, 0x00),
     "Kokiri Green":      Color(0x1E, 0x69, 0x1B),
     "Goron Red":         Color(0x64, 0x14, 0x00),
     "Zora Blue":         Color(0x00, 0x3C, 0x64),
@@ -103,6 +104,7 @@ boomerang_trail_colors = {
 }
 
 gauntlet_colors = {
+    "Rainbow":           Color(0x00, 0x00, 0x00),
     "Silver":            Color(0xFF, 0xFF, 0xFF),
     "Gold":              Color(0xFE, 0xCF, 0x0F),
     "Black":             Color(0x00, 0x00, 0x06),
